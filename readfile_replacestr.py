@@ -29,7 +29,7 @@ def main():
     root.title("請選擇支語檔")
     thefile = tk.filedialog.askopenfilename();
     newfile = re.sub(".txt","tran_chi.txt",thefile)
-    csv_file = 'C:/Users/tiger/OneDrive/桌面/1參考資料/繁體簡體.txt'  # 繁简体对照表的CSV文件路径
+    csv_file = 'C:/..../繁體簡體.txt'  # 繁简体对照表的CSV文件路径
     txt_file = thefile            # 需要替换内容的文本文件路径
     output_file = newfile  # 输出文件路径
 
