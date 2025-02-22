@@ -1,15 +1,17 @@
-﻿import os
+import os
 import subprocess
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
-def compile_lualatex(tex_file, output_dir=".", log_file="compile.log"):
+def compile_xelatex(tex_file, output_dir=".", log_file="compile.log"):
     try:
         # 確保輸出目錄存在
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        # LuaLaTeX 編譯命令
+        # XeLaTeX 編譯命令
         command = [
-            r"C:\texlive\2024\bin\windows\lualatex.exe",#win11 不設path
+            r"C:\texlive\2024\bin\windows\xelatex.exe",  # win11 不設 path
             "-synctex=1",
             "-interaction=nonstopmode",
             "-output-directory", output_dir,
@@ -45,9 +47,23 @@ def compile_lualatex(tex_file, output_dir=".", log_file="compile.log"):
             print("編譯失敗，請檢查錯誤訊息。日誌已保存到", log_file)
     
     except FileNotFoundError:
-        print("無法找到 lualatex，請確認已安裝並配置 PATH。")
+        print("無法找到 xelatex，請確認已安裝並配置 PATH。")
     except Exception as e:
         print(f"發生錯誤：{e}")
 
-# 執行編譯
-compile_lualatex("example.tex", output_dir=".", log_file=r".\compile.log")
+def askfile_and_compile():
+    # 使用 tkinter 開啟檔案選擇對話框
+    Tk().withdraw()  # 隱藏主視窗
+    tex_file = askopenfilename(
+        title="選擇 .tex 檔案",
+        filetypes=[("TeX files", "*.tex")]
+    )
+    
+    if tex_file:
+        print(f"已選擇檔案：{tex_file}")
+        compile_xelatex(tex_file, output_dir=".", log_file=r".\compile.log")
+    else:
+        print("未選擇任何檔案。")
+
+# 執行檔案選擇與編譯
+askfile_and_compile()
